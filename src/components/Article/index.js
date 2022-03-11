@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Article = () => {
 
@@ -12,9 +13,9 @@ const Article = () => {
                     <h1>How to build webapps that scale</h1>
 
                     <div className="article-meta">
-                        <a href=""><img src="http://i.imgur.com/Qr71crq.jpg" /></a>
+                        <Link to=""><img src="http://i.imgur.com/Qr71crq.jpg" /></Link>
                         <div className="info">
-                            <a href="" className="author">Eric Simons</a>
+                            <Link to="" className="author">Eric Simons</Link>
                             <span className="date">January 20th</span>
                         </div>
                         <button className="btn btn-sm btn-outline-secondary">
@@ -49,9 +50,9 @@ const Article = () => {
 
                 <div className="article-actions">
                     <div className="article-meta">
-                        <a href="profile.html"><img src="http://i.imgur.com/Qr71crq.jpg" /></a>
+                        <Link to="/profile"><img src="http://i.imgur.com/Qr71crq.jpg" /></Link>
                         <div className="info">
-                            <a href="" className="author">Eric Simons</a>
+                            <Link to="" className="author">Eric Simons</Link>
                             <span className="date">January 20th</span>
                         </div>
 
@@ -88,11 +89,11 @@ const Article = () => {
                                 <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
                             </div>
                             <div className="card-footer">
-                                <a href="" className="comment-author">
+                                <Link to="" className="comment-author">
                                     <img src="http://i.imgur.com/Qr71crq.jpg" className="comment-author-img" />
-                                </a>
+                                </Link>
                                 &nbsp;
-                                <a href="" className="comment-author">Jacob Schmidt</a>
+                                <Link to="" className="comment-author">Jacob Schmidt</Link>
                                 <span className="date-posted">Dec 29th</span>
                             </div>
                         </div>
@@ -102,11 +103,11 @@ const Article = () => {
                                 <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
                             </div>
                             <div className="card-footer">
-                                <a href="" className="comment-author">
+                                <Link to="" className="comment-author">
                                     <img src="http://i.imgur.com/Qr71crq.jpg" className="comment-author-img" />
-                                </a>
+                                </Link>
                                 &nbsp;
-                                <a href="" className="comment-author">Jacob Schmidt</a>
+                                <Link to="" className="comment-author">Jacob Schmidt</Link>
                                 <span className="date-posted">Dec 29th</span>
                                 <span className="mod-options">
                                     <i className="ion-edit"></i>

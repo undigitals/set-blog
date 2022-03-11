@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
 
@@ -35,44 +36,44 @@ const Profile = () => {
                         <div className="articles-toggle">
                             <ul className="nav nav-pills outline-active">
                                 <li className="nav-item">
-                                    <a className="nav-link active" href="">My Articles</a>
+                                    <Link to="" className="nav-link active" >My Articles</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="">Favorited Articles</a>
+                                    <Link to="" className="nav-link">Favorited Articles</Link>
                                 </li>
                             </ul>
                         </div>
 
                         <div className="article-preview">
                             <div className="article-meta">
-                                <a href=""><img src="http://i.imgur.com/Qr71crq.jpg" /></a>
+                                <Link to=""><img src="http://i.imgur.com/Qr71crq.jpg" /></Link>
                                 <div className="info">
-                                    <a href="" className="author">Eric Simons</a>
+                                    <Link to="" className="author">Eric Simons</Link>
                                     <span className="date">January 20th</span>
                                 </div>
                                 <button className="btn btn-outline-primary btn-sm pull-xs-right">
                                     <i className="ion-heart"></i> 29
                                 </button>
                             </div>
-                            <a href="" className="preview-link">
+                            <Link to="" className="preview-link">
                                 <h1>How to build webapps that scale</h1>
                                 <p>This is the description for the post.</p>
                                 <span>Read more...</span>
-                            </a>
+                            </Link>
                         </div>
 
                         <div className="article-preview">
                             <div className="article-meta">
-                                <a href=""><img src="http://i.imgur.com/N4VcUeJ.jpg" /></a>
+                                <Link to=""><img src="http://i.imgur.com/N4VcUeJ.jpg" /></Link>
                                 <div className="info">
-                                    <a href="" className="author">Albert Pai</a>
+                                    <Link to="" className="author">Albert Pai</Link>
                                     <span className="date">January 20th</span>
                                 </div>
                                 <button className="btn btn-outline-primary btn-sm pull-xs-right">
                                     <i className="ion-heart"></i> 32
                                 </button>
                             </div>
-                            <a href="" className="preview-link">
+                            <Link to="" className="preview-link">
                                 <h1>The song you won't ever stop singing. No matter how hard you try.</h1>
                                 <p>This is the description for the post.</p>
                                 <span>Read more...</span>
@@ -80,7 +81,7 @@ const Profile = () => {
                                     <li className="tag-default tag-pill tag-outline">Music</li>
                                     <li className="tag-default tag-pill tag-outline">Song</li>
                                 </ul>
-                            </a>
+                            </Link>
                         </div>
 
 
