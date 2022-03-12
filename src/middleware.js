@@ -17,12 +17,15 @@ import {
 // view => dispatch => middleware => reducer => store    {async_start, subtype: login}     {async_start, subtype: login}
 // view(login)=> dispatch(login)=> middleware(login) => reducer(async_start) => store(async_start)
 
+
 const promiseMiddleware = (store) => (next) => (action) => {
     if (isPromise(action.payload)) {
         store.dispatch({ type: ASYNC_START, subtype: action.type });
 
 
+
         action.payload.then(res => {
+            console.log("actionPayload", action.payload)
             action.payload = res;
             store.dispatch({ type: ASYNC_END, promise: action.payload });
             store.dispatch(action);

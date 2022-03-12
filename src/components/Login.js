@@ -1,7 +1,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOGIN, UPDATE_FIELD_AUTH } from '../constants/actionTypes';
+import agent from '../agent';
+import ListErrors from './ListErrors';
+
 
 const Login = () => {
+    const dispatch = useDispatch();
+    const authState = useSelector(state => state.auth)
+
+    React.useEffect(() => {
+        console.log(authState);
+    })
+
+    const changeEmail = (e) => {
+        dispatch({ type: UPDATE_FIELD_AUTH, key: 'email', value: e.target.value })
+    }
+
+    const changePassword = (e) => {
+        dispatch({ type: UPDATE_FIELD_AUTH, key: 'password', value: e.target.value })
+    }
+
+    const submitForm = (email, password) => (e) => {
+        e.preventDefault();
+        dispatch({ type: LOGIN, payload: agent.Auth.login(email, password) })
+    }
+
 
     return (
 
@@ -15,18 +40,32 @@ const Login = () => {
                             <Link to="/register">Need an account?</Link>
                         </p>
 
-                        <ul className="error-messages">
-                            <li>That email is already taken</li>
-                        </ul>
+                        <ListErrors errors={authState.errors} />
 
-                        <form>
+                        <form onSubmit={submitForm(authState.email, authState.password)}>
                             <fieldset className="form-group">
-                                <input className="form-control form-control-lg" type="text" placeholder="Email" />
+                                <input
+                                    className="form-control form-control-lg"
+                                    type="text"
+                                    placeholder="Email"
+                                    value={authState.email}
+                                    onChange={changeEmail}
+                                />
                             </fieldset>
                             <fieldset className="form-group">
-                                <input className="form-control form-control-lg" type="password" placeholder="Password" />
+                                <input
+                                    className="form-control form-control-lg"
+                                    type="password"
+                                    placeholder="Password"
+                                    value={authState.password}
+                                    onChange={changePassword}
+                                />
                             </fieldset>
-                            <button className="btn btn-lg btn-primary pull-xs-right">
+                            <button
+                                className="btn btn-lg btn-primary pull-xs-right"
+                                type="submit"
+                                disabled={authState.inProgress}
+                            >
                                 Sign in
                             </button>
                         </form>
