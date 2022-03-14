@@ -41,7 +41,7 @@ const App = () => {
       <div>
         <Header
           appName={commonState?.appName}
-          current={commonState?.currentUser}
+          currentUser={commonState?.currentUser}
         />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -59,7 +59,7 @@ const App = () => {
   return (
     <Header
       appName={commonState?.appName}
-      current={commonState?.currentUser}
+      currentUser={commonState?.currentUser}
     />
   )
 

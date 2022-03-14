@@ -1,20 +1,37 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import agent from '../../agent';
 
-const Tags = () => {
+const Tags = ({ tags, onClickTag }) => {
+    if (tags) {
+        return (
+            <div className="tag-list">
+                {tags?.map(tag => {
+                    const handleClick = e => {
+                        e.preventDefault();
+                        onClickTag(tag, page => agent.Articles.byTag(tag, page), agent.Articles.byTag(tag));
+                    }
 
-    return (
-        <div className="tag-list">
-            <Link to="" className="tag-pill tag-default">programming</Link>
-            <Link to="" className="tag-pill tag-default">javascript</Link>
-            <Link to="" className="tag-pill tag-default">emberjs</Link>
-            <Link to="" className="tag-pill tag-default">angularjs</Link>
-            <Link to="" className="tag-pill tag-default">react</Link>
-            <Link to="" className="tag-pill tag-default">mean</Link>
-            <Link to="" className="tag-pill tag-default">node</Link>
-            <Link to="" className="tag-pill tag-default">rails</Link>
-        </div>
-    )
+                    return (
+                        <a
+                            className="tag-default tag-pill"
+                            href=""
+                            key={tag}
+                            onClick={handleClick}
+                        >
+                            {tag}
+                        </a>
+                    )
+
+                })}
+            </div>
+        )
+    } else {
+        return (
+            <div>Loading Tags...</div>
+        )
+    }
+
 }
 
 export default Tags;

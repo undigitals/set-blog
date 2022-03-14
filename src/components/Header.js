@@ -53,20 +53,14 @@ const LoggedOutView = ({ currentUser }) => {
     return null;
 }
 
-
-const currentUser = {
-    username: "jack",
-    image: "http://i.imgur.com/Qr71crq.jpg"
-}
-
-const Header = ({ appName }) => {
+const Header = ({ appName, currentUser }) => {
     return (
         <nav className="navbar navbar-light">
             <div className="container">
                 <Link to="/" className="navbar-brand" >{appName}</Link>
 
                 <LoggedInView currentUser={currentUser} />
-                <LoggedOutView currentUser />
+                <LoggedOutView currentUser={currentUser} />
             </div>
         </nav>
 
