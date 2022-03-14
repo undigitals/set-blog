@@ -21,9 +21,6 @@ import {
 const promiseMiddleware = (store) => (next) => (action) => {
     if (isPromise(action.payload)) {
         store.dispatch({ type: ASYNC_START, subtype: action.type });
-
-
-
         action.payload.then(res => {
             console.log("actionPayload", action.payload)
             action.payload = res;
@@ -55,7 +52,6 @@ const localStorageMiddleware = (store) => (next) => (action) => {
         window.localStorage.setItem("jwt", "");
         agent.setToken(null)
     }
-
     next(action);
 }
 
