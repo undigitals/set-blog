@@ -25,6 +25,7 @@ const YourFeedTab = ({ token, onTabClicked, tab }) => {
             </li>
         )
     }
+    return null;
 }
 
 
@@ -74,7 +75,8 @@ const MainView = () => {
     }
 
     return (
-        <>
+
+        <div className="col-md-9">
             <div className="feed-toggle">
                 <ul className="nav nav-pills outline-active">
 
@@ -94,8 +96,14 @@ const MainView = () => {
                 </ul>
             </div>
 
-            <ArticleList />
-        </>
+            <ArticleList
+                pager={articleList?.pager}
+                articles={articleList?.articles}
+                loading={articleList?.loading}
+                articlesCount={articleList?.articlesCount}
+                currentPage={articleList?.currentPage}
+            />
+        </div>
     )
 }
 
