@@ -49,6 +49,18 @@ const GlobalFeedTab = ({ onTabClicked, tab }) => {
 }
 
 
+const TagFilterTab = ({ tag }) => {
+    if (!tag) {
+        return null;
+    }
+    return (
+        <li className="nav-item">
+            <a href="" className="nav-link active" style={{ borderWidth: 4, borderColor: "red" }}>
+                <i className="ion-pound"></i>{tag}
+            </a>
+        </li>
+    )
+}
 
 
 
@@ -77,6 +89,7 @@ const MainView = () => {
                         onTabClicked={onTabClicked}
                     />
 
+                    <TagFilterTab tag={articleList?.tag} />
 
                 </ul>
             </div>
