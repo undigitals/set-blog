@@ -32,7 +32,7 @@ const Article = () => {
 
 
     const markup = { __html: marked(globalArticle?.article?.body, { sanitize: true }) };
-    const canModify = globalCommon?.currentUser && globalCommon?.currentUser?.username === globalArticle?.article?.auther?.username;
+    const canModify = globalCommon?.currentUser && globalCommon?.currentUser?.username === globalArticle?.article?.author?.username;
 
     return (
 
@@ -94,7 +94,12 @@ const Article = () => {
                 </div>
 
                 <div className="row">
-                    <CommentContainer />
+                    <CommentContainer
+                        comments={globalArticle?.comments || []}
+                        errors={globalArticle?.commentErrors}
+                        slug={params?.id}
+                        currentUser={globalCommon?.currentUser}
+                    />
                 </div>
             </div>
         </div>
