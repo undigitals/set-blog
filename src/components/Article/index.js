@@ -1,7 +1,35 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
+import { marked } from 'marked';
+import agent from '../../agent';
+import { ARTICLE_PAGE_LOADED, ARTICLE_PAGE_UNLOADED } from '../../constants/actionTypes';
+
+
 
 const Article = () => {
+
+    const dispatch = useDispatch();
+    const params = useParams();
+
+    const { article: globalArticle, common: globalCommon } = useSelector(state => state);
+
+    useEffect(() => {
+        dispatch({
+            type: ARTICLE_PAGE_LOADED, payload: Promise.all([
+                agent.Articles.get(params?.id),
+                agent.Comments.forArticle(params?.id)
+            ])
+        })
+    }, [])
+
+    if (!globalArticle?.article) {
+        return null;
+    }
+
+    const markup = { __html: marked(globalArticle?.article?.body, { sanitize: true }) };
+
+    console.log("globalArticle", globalArticle?.article?.body)
 
     return (
 

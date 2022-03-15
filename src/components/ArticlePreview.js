@@ -16,7 +16,7 @@ const ArticlePreview = ({ article }) => {
 
     const handleClick = (e) => {
         e.preventDefault();
-        if (article?.favorited) {
+        if (!article?.favorited) {
             dispatch({ type: ARTICLE_FAVORITED, payload: agent.Articles.favorite(article.slug) })
         } else {
             dispatch({ type: ARTICLE_UNFAVORITED, payload: agent.Articles.unfavorite(article.slug) })
@@ -33,9 +33,11 @@ const ArticlePreview = ({ article }) => {
                         {new Date(article?.createdAt).toDateString()}
                     </span>
                 </div>
-                <button className="btn btn-outline-primary btn-sm pull-xs-right">
-                    <i className="ion-heart"></i> {article?.favoritesCount}
-                </button>
+                <div className="pull-xs-right">
+                    <button className={favoritedButtonClass} onClick={handleClick}>
+                        <i className="ion-heart"></i> {article?.favoritesCount}
+                    </button>
+                </div>
             </div>
             <Link to={`/article/${article?.slug}`} className="preview-link">
                 <h1>{article?.title}</h1>
@@ -44,7 +46,6 @@ const ArticlePreview = ({ article }) => {
                 <ul className="tag-list">
                     {
                         article?.tagList?.map(tag => {
-                            console.log("tag", tag)
                             return (
                                 <li className="tag-default tag-pill tag-outline" key={tag}>{tag}</li>
                             )
