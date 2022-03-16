@@ -1,16 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ArticleActions from './ArticleActions';
 
-const ArticleMeta = () => {
+const ArticleMeta = ({
+    article,
+    canModify,
+}) => {
 
     return (
         <div className="article-meta">
-            <Link to=""><img src="http://i.imgur.com/Qr71crq.jpg" /></Link>
+            <Link to={`/@${article?.author?.username}`}><img src={article?.author?.image} alt={article?.author?.username} /></Link>
             <div className="info">
-                <Link to="" className="author">Eric Simons</Link>
-                <span className="date">January 20th</span>
+                <Link to={`/@${article?.author?.username}`} className="author">{article?.author?.username}</Link>
+                <span className="date">{new Date(article?.createdAt).toDateString()}</span>
             </div>
-            <button className="btn btn-sm btn-outline-secondary">
+
+            <ArticleActions canModify={canModify} article={article} />
+
+            {/* <button className="btn btn-sm btn-outline-secondary">
                 <i className="ion-plus-round"></i>
                 &nbsp;
                 Follow Eric Simons <span className="counter">(10)</span>
@@ -20,7 +27,7 @@ const ArticleMeta = () => {
                 <i className="ion-heart"></i>
                 &nbsp;
                 Favorite Post <span className="counter">(29)</span>
-            </button>
+            </button> */}
         </div>
     )
 }

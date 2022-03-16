@@ -16,6 +16,8 @@ const Article = () => {
 
     const { article: globalArticle, common: globalCommon } = useSelector(state => state);
 
+
+
     useEffect(() => {
         dispatch({
             type: ARTICLE_PAGE_LOADED, payload: Promise.all([
@@ -71,7 +73,8 @@ const Article = () => {
 
                 <hr />
 
-                <div className="article-actions">
+
+                {/* <div className="article-actions">
                     <div className="article-meta">
                         <Link to="/profile"><img src="http://i.imgur.com/Qr71crq.jpg" /></Link>
                         <div className="info">
@@ -91,7 +94,7 @@ const Article = () => {
                             Favorite Post <span className="counter">(29)</span>
                         </button>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="row">
                     <CommentContainer

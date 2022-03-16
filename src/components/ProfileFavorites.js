@@ -1,26 +1,136 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom';
+import ArticleList from './ArticleList';
+import agent from '../agent';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    FOLLOW_USER,
+    UNFOLLOW_USER,
+    PROFILE_PAGE_LOADED,
+    PROFILE_PAGE_UNLOADED
+} from '../constants/actionTypes';
 
-const ProfileFavorites = () => {
+
+const EditProfileSettings = ({ isUser }) => {
+    if (isUser) {
+        return (
+            <Link
+                to="/settings"
+                className="btn btn-sm btn-outline-secondary action-btn"
+            >
+                <i className="ion-gear-a"></i> Edit Profile Settings
+            </Link>
+        )
+    }
+    return null;
+}
+
+const FollowUserButton = ({ isUser, user, unfollow, follow }) => {
+    if (isUser) {
+        return null;
+    }
+
+    let classes = 'btn btn-sm action-btn';
+    if (user?.following) {
+        classes += ' btn-secondary'
+    } else {
+        classes += ' btn-outline-secondary';
+    }
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        if (user?.following) {
+            unfollow(user?.username)
+        } else {
+            follow(user?.username)
+        }
+    }
 
     return (
+        <button className={classes} onClick={handleClick}>
+            <i className="ion-plus-round"></i>
+            &nbsp;
+            {user?.following ? 'Unfollow' : 'Follow'} {user?.username}
+        </button>
+    )
+}
 
+
+const Tabs = ({ profile }) => {
+    return (
+        <ul className="nav nav-pills outline-active">
+            <li className="nav-item">
+                <Link className="nav-link" to={`/@${profile?.username}`}>My Articles</Link>
+            </li>
+            <li className="nav-item">
+                <Link className="nav-link active" to={`/@${profile?.username}/favorites`}>Favorited Articles</Link>
+            </li>
+        </ul>
+    )
+
+}
+
+
+
+const Profile = () => {
+    const dispatch = useDispatch();
+    const params = useParams();
+
+    const { articleList: globalArticleList, common: globalCommon, profile: globalProfile } = useSelector(state => state);
+
+    const onFollow = (username) => {
+        dispatch({
+            type: FOLLOW_USER,
+            payload: agent.Profile.follow(username)
+        })
+    }
+
+    const onUnFollow = (username) => {
+        dispatch({
+            type: UNFOLLOW_USER,
+            payload: agent.Profile.unfollow(username)
+        })
+    }
+
+
+    useEffect(() => {
+        dispatch({
+            type: PROFILE_PAGE_LOADED,
+            payload: Promise.all([
+                agent.Profile.get(params?.username),
+                agent.Articles.favoriteBy(params?.username)
+            ])
+        })
+    }, [])
+
+
+    if (!globalProfile) {
+        return null;
+    }
+
+    const isUser = globalProfile?.username === globalCommon?.currentUser?.username;
+
+    return (
         <div className="profile-page">
             <div className="user-info">
                 <div className="container">
                     <div className="row">
 
                         <div className="col-xs-12 col-md-10 offset-md-1">
-                            <img src="http://i.imgur.com/Qr71crq.jpg" className="user-img" />
-                            <h4>Eric Simons</h4>
+                            <img src={globalProfile?.image} className="user-img" alt={globalProfile?.username} />
+                            <h4>{globalProfile?.username}</h4>
                             <p>
-                                Cofounder @GoThinkster, lived in Aol's HQ for a few months, kinda looks like Peeta from the
-                                Hunger Games
+                                {globalProfile?.bio}
                             </p>
-                            <button className="btn btn-sm btn-outline-secondary action-btn">
-                                <i className="ion-plus-round"></i>
-                                &nbsp;
-                                Follow Eric Simons
-                            </button>
+
+                            <EditProfileSettings isUser={isUser} />
+                            <FollowUserButton
+                                isUser={isUser}
+                                user={globalProfile}
+                                follow={onFollow}
+                                unfollow={onUnFollow}
+                            />
+
                         </div>
 
                     </div>
@@ -32,56 +142,15 @@ const ProfileFavorites = () => {
 
                     <div className="col-xs-12 col-md-10 offset-md-1">
                         <div className="articles-toggle">
-                            <ul className="nav nav-pills outline-active">
-                                <li className="nav-item">
-                                    <a className="nav-link" href="">My Articles</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link active" href="">Favorited Articles</a>
-                                </li>
-                            </ul>
+                            <Tabs profile={globalProfile} />
                         </div>
 
-                        <div className="article-preview">
-                            <div className="article-meta">
-                                <a href=""><img src="http://i.imgur.com/Qr71crq.jpg" /></a>
-                                <div className="info">
-                                    <a href="" className="author">Eric Simons</a>
-                                    <span className="date">January 20th</span>
-                                </div>
-                                <button className="btn btn-outline-primary btn-sm pull-xs-right">
-                                    <i className="ion-heart"></i> 29
-                                </button>
-                            </div>
-                            <a href="" className="preview-link">
-                                <h1>How to build webapps that scale</h1>
-                                <p>This is the description for the post.</p>
-                                <span>Read more...</span>
-                            </a>
-                        </div>
-
-                        <div className="article-preview">
-                            <div className="article-meta">
-                                <a href=""><img src="http://i.imgur.com/N4VcUeJ.jpg" /></a>
-                                <div className="info">
-                                    <a href="" className="author">Albert Pai</a>
-                                    <span className="date">January 20th</span>
-                                </div>
-                                <button className="btn btn-outline-primary btn-sm pull-xs-right">
-                                    <i className="ion-heart"></i> 32
-                                </button>
-                            </div>
-                            <a href="" className="preview-link">
-                                <h1>The song you won't ever stop singing. No matter how hard you try.</h1>
-                                <p>This is the description for the post.</p>
-                                <span>Read more...</span>
-                                <ul className="tag-list">
-                                    <li className="tag-default tag-pill tag-outline">Music</li>
-                                    <li className="tag-default tag-pill tag-outline">Song</li>
-                                </ul>
-                            </a>
-                        </div>
-
+                        <ArticleList
+                            pager={globalArticleList?.pager}
+                            articles={globalArticleList?.articles}
+                            articlesCount={globalArticleList?.articlesCount}
+                            state={globalArticleList?.currrentPage}
+                        />
 
                     </div>
 
@@ -92,4 +161,4 @@ const ProfileFavorites = () => {
     )
 }
 
-export default ProfileFavorites;
+export default Profile;
