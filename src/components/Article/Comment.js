@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import common from '../../reducers/common';
+import DeleteButton from './DeleteButton';
 
 const Comment = ({
     comment,
@@ -24,6 +25,11 @@ const Comment = ({
                 <span className="date-posted">
                     {new Date(comment?.createdAt).toDateString()}
                 </span>
+                <DeleteButton
+                    show={show}
+                    slug={slug}
+                    commentId={comment?.id}
+                />
             </div>
         </div>
     )

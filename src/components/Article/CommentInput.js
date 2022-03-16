@@ -1,14 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
+import agent from '../../agent';
+import { useDispatch } from 'react-redux';
+import { ADD_COMMENT } from '../../constants/actionTypes';
 
-const CommentInput = () => {
+
+const CommentInput = ({
+    slug,
+    currentUser
+}) => {
+
+    const [body, setBody] = useState('');
+    const dispatch = useDispatch();
+
+    const changeBody = e => {
+        e.preventDefault();
+        setBody(e.target.value);
+    }
+
+    const createComment = e => {
+        e.preventDefault();
+        const payload = agent.Comments.create(slug, { body });
+        setBody('');
+        dispatch({ type: ADD_COMMENT, payload });
+    }
+
+
     return (
-        <form className="card comment-form">
+        <form className="card comment-form" onSubmit={createComment}>
             <div className="card-block">
-                <textarea className="form-control" placeholder="Write a comment..." rows="3"></textarea>
+                <textarea
+                    className="form-control"
+                    placeholder="Write a comment..."
+                    rows="3"
+                    value={body}
+                    onChange={changeBody}
+                ></textarea>
             </div>
             <div className="card-footer">
-                <img src="http://i.imgur.com/Qr71crq.jpg" className="comment-author-img" />
-                <button className="btn btn-sm btn-primary">
+                <img
+                    src={currentUser.image}
+                    className="comment-author-img"
+                    alt={currentUser.username}
+                />
+                <button
+                    className="btn btn-sm btn-primary"
+                    type="submit"
+                >
                     Post Comment
                 </button>
             </div>
