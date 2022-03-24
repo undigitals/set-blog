@@ -57,6 +57,15 @@ const Editor = () => {
 
     }
 
+    console.log("editorState", editorState)
+
+    React.useEffect(() => {
+        if (params.slug) {
+            dispatch({ type: EDITOR_PAGE_LOADED, payload: agent.Articles.get(params.slug) })
+        }
+    }, [params.slug])
+
+
     React.useEffect(() => {
         if (params.slug) {
             dispatch({ type: EDITOR_PAGE_LOADED, payload: agent.Articles.get(params.slug) })

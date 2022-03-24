@@ -48,6 +48,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/editor" element={<Editor />} />
+          <Route path="/editor/:slug" element={<Editor />} />
           <Route path="/article/:id" element={<Article />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/@:username/favorites" element={<ProfileFavorites />} />
