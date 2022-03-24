@@ -114,7 +114,18 @@ const Editor = () => {
                                         onKeyUp={watchForEnter}
 
                                     />
-                                    <div className="tag-list"></div>
+                                    <div className="tag-list">
+                                        {
+                                            (editorState?.tagList || []).map(tag=>{
+                                                return (
+                                                    <span className="tag-default tag-pill" key={tag}>
+                                                        <i className="ion-close-round" onClick={removeTagHandler(tag)}></i>
+                                                        {tag}
+                                                    </span>
+                                                )
+                                            })
+                                        }
+                                    </div>
                                 </fieldset>
                                 <button
                                     className="btn btn-lg pull-xs-right btn-primary"

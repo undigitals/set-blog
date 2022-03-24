@@ -6,6 +6,7 @@ import articleList from "./reducers/articleList";
 import article from "./reducers/article";
 import profile from "./reducers/profile";
 import editor from "./reducers/editor";
+import settings from "./reducers/settings";
 
 const combine = combineReducers({
     auth,
@@ -14,7 +15,8 @@ const combine = combineReducers({
     articleList,
     article,
     profile,
-    editor
+    editor,
+    settings
 })
 
 export default combine;
