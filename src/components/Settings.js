@@ -8,6 +8,7 @@ import {
     LOGOUT,
     LOGOUT_PAGE_UNLOADED
 } from '../constants/actionTypes'
+import "./setting.css";
 
 
 const SettingsForm = (props) => {
@@ -131,7 +132,7 @@ const Settings = () => {
             <div className="container page">
                 <div className="row">
                     <div className="col-md-6 offset-md-3 col-xs-12">
-                        <h1 className="text-xs-center">Your Settings</h1>
+                        <h1 className="text-xs-center setting-header">Your Settings</h1>
                         <ListErrors errors={globalSettings?.errors} />
 
                         <SettingsForm 

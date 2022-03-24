@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ListErrors from './ListErrors';
 import { useParams } from 'react-router-dom';
 import agent from '../agent';
@@ -12,12 +12,28 @@ import {
     UPDATE_FIELD_EDITOR,
     UPDATE_FIELD_AUTH
 } from '../constants/actionTypes';
+import RingLoader from "react-spinners/RingLoader";
+import "./setting.css"
+
+const Loading = ({loading}) => {
+
+  let [color, setColor] = useState("red");
+
+  return (
+    <div className="sweet-loading">
+      <RingLoader color={color} loading={loading}  size={150} />
+    </div>
+  );
+  }
+
+
 
 const Editor = () => {
 
+    const editorState = useSelector(state => state.editor);
+    // const [loading, setLoading] = useState(editorState.inProgress)
     const dispatch = useDispatch();
     const params = useParams();
-    const editorState = useSelector(state => state.editor);
     const updateFieldEvent = (key) => (e) => dispatch({
         type: UPDATE_FIELD_EDITOR, key, value: e.target.value
     })
@@ -75,8 +91,11 @@ const Editor = () => {
         }
     }, [])
 
+    console.log("editorInprogress", editorState.inProgress)
+
     return (
 
+        
         <div className="editor-page">
             <div className="container page">
                 <div className="row">
@@ -84,7 +103,7 @@ const Editor = () => {
                     <div className="col-md-10 offset-md-1 col-xs-12">
                         <ListErrors errors={editorState.errors} />
 
-                        <form>
+                        {!editorState.inProgress === true ? (<form>
                             <fieldset>
                                 <fieldset className="form-group">
                                     <input
@@ -145,7 +164,8 @@ const Editor = () => {
                                     Publish Article
                                 </button>
                             </fieldset>
-                        </form>
+                        </form>) : <Loading loading={true}/>
+                        }
                     </div>
 
                 </div>
